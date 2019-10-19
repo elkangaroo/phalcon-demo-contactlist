@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  php-phalcon:
+    image: php:7.3-cli
+    build: .docker/php-phalcon
+    ports:
+      - "8765:8080"
+    volumes:
+      - .:/var/www
+    command: php -S 0.0.0.0:8080 -t public .htrouter.php
+
