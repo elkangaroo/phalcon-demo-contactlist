@@ -1,5 +1,7 @@
 <?php
 
+use Phalcon\Config\Adapter\Ini;
+use Phalcon\Db\Adapter\PdoFactory;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Loader;
 use Phalcon\Mvc\Application;
@@ -16,7 +18,13 @@ $loader->registerDirs([
 ]);
 $loader->register();
 
+$config = new Ini(APP_PATH . '/storage/config.ini');
+
 $di = new FactoryDefault();
+$di->set('config', $config);
+$di->set('db', function () use ($config) {
+    return (new PdoFactory())->load($config->database);
+});
 $di->set('view', function () {
     $view = new View();
     $view->setViewsDir(APP_PATH . '/views/');
