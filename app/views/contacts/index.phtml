@@ -1,0 +1,35 @@
+<?php
+
+echo "<h1>Contact List</h1>";
+
+echo $this->tag->linkTo(['contacts/create', 'Add a contact', 'class' => 'btn btn-primary']);
+
+if ($contacts->count() > 0) {
+?>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="3">total contacts: <?php echo $contacts->count(); ?></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <?php foreach ($contacts as $contact) { ?>
+            <tr>
+                <td><?php echo $contact->id; ?></td>
+                <td><?php echo $contact->first_name . ' ' . $contact->last_name; ?></td>
+                <td><?php echo $contact->email; ?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+<?php
+}
+?>
+

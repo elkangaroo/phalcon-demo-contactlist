@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Model;
 
-class Customers extends Model
+class Contacts extends Model
 {
     public $id;
     public $firstName;

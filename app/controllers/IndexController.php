@@ -6,7 +6,6 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
-        $this->view->customers = Customers::find();
     }
 }
 

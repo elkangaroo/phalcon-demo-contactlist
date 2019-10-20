@@ -1,7 +1,10 @@
 FROM php:7.3-cli
 
 # Install needed dependencies
-RUN pecl install -f psr-0.7.0 \
+RUN apt-get update \
+ && apt-get install -y libzip-dev \
+ && docker-php-ext-install zip \
+ && pecl install -f psr-0.7.0 \
  && docker-php-ext-enable psr
 
 # Compile phalcon from source...
@@ -20,8 +23,7 @@ RUN mkdir -p /tmp/zephir-parser \
     && docker-php-ext-configure /tmp/phalcon/ext \
     && docker-php-ext-install /tmp/phalcon/ext \
     ) \
- && rm -r /tmp/phalcon \
- && docker-php-ext-enable phalcon
+ && rm -r /tmp/phalcon
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
