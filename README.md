@@ -14,3 +14,6 @@ In your favourite terminal run the following commands:
 
 Now you should be able to open the application in you browser via `http://localhost:8765/`
 
+## Database
+The app uses the included sqlite3 database `app/storage/database.db`. Tables are already set up, the queries can be found in `app/storage/database-structure.sql`.
+

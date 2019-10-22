@@ -30,5 +30,21 @@ class ContactsController extends Controller
         $this->response->redirect('/contacts');
         $this->view->disable();
     }
+
+    public function deleteAction(int $id)
+    {
+        $contact = Contacts::findFirst($id);
+        if (false === $contact || false == $contact->delete()) {
+            echo 'Nooo...' . "\n";
+            foreach ($contact->getMessages() as $message) {
+                echo $message . "\n";
+            }
+        } else {
+            echo 'Yeah!';
+        }
+
+        $this->response->redirect('/contacts');
+        $this->view->disable();
+    }
 }
 
