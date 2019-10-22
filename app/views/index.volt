@@ -7,6 +7,8 @@
 </head>
 <body>
 <div class="container">
+    <?php echo $this->flashSession->output(); ?>
+
     {{ content() }}
 </div>
 </body>

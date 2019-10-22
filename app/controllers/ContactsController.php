@@ -19,32 +19,29 @@ class ContactsController extends Controller
         $contact->email = $faker->email;
         $contact->created_at = (new \DateTime())->format(\DateTime::ATOM);
         if (false === $contact->save()) {
-            echo 'Nooo...' . "\n";
-            foreach ($contact->getMessages() as $message) {
-                echo $message . "\n";
-            }
+            $this->flashSession->error('Contact creation failed: ' . implode($contact->getMessages(), "\n"));
         } else {
-            echo 'Yeah!';
+            $this->flashSession->success('A contact has been created with id ' . $contact->id);
         }
 
         $this->response->redirect('/contacts');
-        $this->view->disable();
     }
 
     public function deleteAction(int $id)
     {
         $contact = Contacts::findFirst($id);
-        if (false === $contact || false == $contact->delete()) {
-            echo 'Nooo...' . "\n";
-            foreach ($contact->getMessages() as $message) {
-                echo $message . "\n";
-            }
+
+        if (null === $contact) {
+            return $this->response->setStatusCode(404, 'Not Found');
+        }
+
+        if (false == $contact->delete()) {
+            $this->flashSession->error('Contact deletion failed: ' . implode($contact->getMessages(), "\n"));
         } else {
-            echo 'Yeah!';
+            $this->flashSession->success('Contact with id ' . $contact->id . ' has beend deleted.');
         }
 
         $this->response->redirect('/contacts');
-        $this->view->disable();
     }
 }
 
