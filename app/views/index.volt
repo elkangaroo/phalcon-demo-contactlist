@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-    <?php echo $this->getContent(); ?>
+    {{ content() }}
 </div>
 </body>
 </html>

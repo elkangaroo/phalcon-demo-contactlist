@@ -2,10 +2,13 @@
 
 use Phalcon\Config\Adapter\Ini;
 use Phalcon\Db\Adapter\PdoFactory;
+use Phalcon\Di\DiInterface;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Loader;
 use Phalcon\Mvc\Application;
 use Phalcon\Mvc\View;
+use Phalcon\Mvc\ViewBaseInterface;
+use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\Url as UrlProvider;
 
 define('BASE_PATH', dirname(__DIR__));
@@ -30,6 +33,15 @@ $di->set('db', function () use ($config) {
 $di->set('view', function () {
     $view = new View();
     $view->setViewsDir(APP_PATH . '/views/');
+    $view->registerEngines([
+        '.volt' => function (ViewBaseInterface $view, DiInterface $container = null) {
+            $volt = new Volt($view, $container);
+            $volt->setOptions([
+                'path' => APP_PATH . '/storage/cache/volt/',
+            ]);
+            return $volt;
+        }
+    ]);
     return $view;
 });
 $di->set('url', function () {
