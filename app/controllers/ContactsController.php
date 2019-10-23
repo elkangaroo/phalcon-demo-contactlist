@@ -24,7 +24,31 @@ class ContactsController extends Controller
             $this->flashSession->success('A contact has been created with id ' . $contact->id);
         }
 
-        $this->response->redirect('/contacts');
+        return $this->response->redirect('/contacts');
+    }
+
+    public function updateAction(int $id)
+    {
+        $contact = Contacts::findFirst($id);
+
+        if (null === $contact) {
+            return $this->response->setStatusCode(404, 'Not Found');
+        }
+
+        $form = new ContactsForm($contact);
+        $form->bind($_POST, $contact);
+
+        if ($this->request->isPost() && $form->isValid()) {
+            if (false == $contact->save()) {
+                $this->flashSession->error('Contact update failed: ' . implode($contact->getMessages(), "\n"));
+            } else {
+                $this->flashSession->success('Contact with id ' . $contact->id . ' has beend updated.');
+                return $this->response->redirect('/contacts');
+            }
+        }
+
+        $this->view->form = $form;
+        $this->view->contact = $contact;
     }
 
     public function deleteAction(int $id)
@@ -41,7 +65,7 @@ class ContactsController extends Controller
             $this->flashSession->success('Contact with id ' . $contact->id . ' has beend deleted.');
         }
 
-        $this->response->redirect('/contacts');
+        return $this->response->redirect('/contacts');
     }
 }
 

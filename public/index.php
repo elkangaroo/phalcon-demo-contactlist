@@ -23,6 +23,7 @@ require BASE_PATH . '/vendor/autoload.php';
 $loader = new Loader();
 $loader->registerDirs([
     APP_PATH . '/controllers/',
+    APP_PATH . '/forms/',
     APP_PATH . '/models/',
 ]);
 $loader->register();

@@ -23,7 +23,11 @@
                 <td>{{ contact.id }}</td>
                 <td>{{ contact.first_name }} {{ contact.last_name }}</td>
                 <td>{{ contact.email }}</td>
-                <td>{{ link_to('contacts/delete/' ~ contact.id, 'delete') }}</td>
+                <td>
+                    <small>
+                    {{ link_to('contacts/delete/' ~ contact.id, 'delete') }} | {{ link_to('contacts/update/' ~ contact.id, 'edit') }}
+                    </small>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
