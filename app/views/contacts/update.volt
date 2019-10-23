@@ -16,6 +16,7 @@
 </div>
 
 {{ submit_button('Update', 'class': 'btn btn-primary') }}
+{{ link_to('contacts', 'cancel', 'class': 'btn btn btn-link') }}
 
 {{ end_form() }}
 
